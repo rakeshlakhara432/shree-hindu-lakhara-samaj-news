@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Gallery Management{% endblock %}
+
+{% block page_icon %}<i class="fas fa-images text-info"></i>{% endblock %}
+{% block page_title %}Photo Gallery{% endblock %}
+
+{% block content %}
+<div class="card card-panel">
+    <div class="card-header-styled">
+        <h5 class="mb-0">Manage Albums</h5>
+        <a href="{% url 'dashboard:add_album' %}" class="btn btn-orange shadow-0"><i class="fas fa-plus me-2"></i> New Album</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Album Title</th>
+                        <th>Created</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for album in albums %}
+                    <tr>
+                        <td class="ps-4">
+                            <h6 class="mb-0 fw-bold">{{ album.title }}</h6>
+                        </td>
+                        <td>{{ album.created_at|date:"d M, Y" }}</td>
+                        <td class="text-end pe-4">
+                            <a href="{% url 'dashboard:edit_album' album.pk %}" class="btn btn-sm btn-light shadow-0"><i class="fas fa-edit text-primary"></i></a>
+                            <a href="{% url 'dashboard:delete_album' album.pk %}" class="btn btn-sm btn-light shadow-0" onclick="return confirm('Delete this album?')"><i class="fas fa-trash text-danger"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-5">
+                            <p class="text-muted mb-0">No albums found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

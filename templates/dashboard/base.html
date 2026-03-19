@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="hi">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Portal{% endblock %} - SHLS</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-orange: #FF6600;
+            --sidebar-dark: #1e1e2d;
+            --sidebar-hover: #2b2b40;
+            --bg-light: #f4f7fa;
+        }
+        body {
+            font-family: 'Noto Sans Devanagari', 'Roboto', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: var(--sidebar-dark);
+            position: fixed;
+            left: 0;
+            top: 0;
+            color: #fff;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .sidebar-header i {
+            font-size: 24px;
+            color: var(--primary-orange);
+            margin-right: 10px;
+        }
+        .sidebar-header h4 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+        .sidebar-menu {
+            padding: 20px 0;
+            list-style: none;
+            margin: 0;
+        }
+        .sidebar-menu li a {
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            color: #a2a3b7;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+        .sidebar-menu li a i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .sidebar-menu li a:hover {
+            color: #fff;
+            background-color: var(--sidebar-hover);
+        }
+        .sidebar-menu li.active a {
+            color: #fff;
+            background-color: rgba(255, 102, 0, 0.1);
+            border-left: 4px solid var(--primary-orange);
+        }
+        .sidebar-menu li.active a i {
+            color: var(--primary-orange);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .top-navbar {
+            background-color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .page-title {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+        .page-title i {
+            margin-right: 15px;
+            color: var(--primary-orange);
+            font-size: 1.5rem;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background-color: var(--primary-orange);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        .user-info span {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .content-body {
+            padding: 0 30px 30px;
+        }
+        .card-panel {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: none;
+            overflow: hidden;
+        }
+        .card-header-styled {
+            padding: 20px 25px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-header-styled h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .btn-orange {
+            background-color: var(--primary-orange);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 500;
+            padding: 8px 20px;
+        }
+        .btn-orange:hover {
+            background-color: #e65c00;
+            color: #fff;
+        }
+
+        /* List Item Styling */
+        .admin-list-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+        }
+        .admin-list-item:hover {
+            background-color: #fafbfc;
+        }
+        .admin-list-item-content {
+            border-left: 3px solid var(--primary-orange);
+            padding-left: 15px;
+        }
+        .admin-actions .btn-sm {
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
+        /* Dashboard Responsive */
+        @media (max-width: 991.98px) {
+            .sidebar { left: -250px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0 !important; }
+            .top-navbar { padding: 15px; }
+            .content-body { padding: 0 15px 15px; }
+            .navbar-toggle-btn { display: block !important; margin-right: 15px; }
+        }
+        .navbar-toggle-btn { display: none; cursor: pointer; font-size: 1.2rem; }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <img src="{% static 'img/logo.png' %}" alt="Logo" height="35" class="me-2 rounded-circle bg-white p-1">
+        <h4>Admin Portal</h4>
+    </div>
+    <ul class="sidebar-menu">
+        <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+            <a href="{% url 'dashboard:home' %}"><i class="fas fa-th-large"></i> Dashboard</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'posts' %}active{% endif %}">
+            <a href="{% url 'dashboard:posts' %}"><i class="fas fa-file-alt"></i> Manage Posts</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'rajasthan_news' %}active{% endif %}">
+            <a href="{% url 'dashboard:rajasthan_news' %}"><i class="fas fa-map-marked-alt"></i> Rajasthan News</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">
+            <a href="{% url 'dashboard:gallery' %}"><i class="fas fa-images"></i> Gallery Albums</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'photos' %}active{% endif %}">
+            <a href="{% url 'dashboard:photos' %}"><i class="fas fa-camera"></i> Gallery Photos</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'community' %}active{% endif %}">
+            <a href="{% url 'dashboard:community' %}"><i class="fas fa-share-alt"></i> Community Links</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'events' %}active{% endif %}">
+            <a href="{% url 'dashboard:events' %}"><i class="fas fa-calendar-alt"></i> Events</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'notices' %}active{% endif %}">
+            <a href="{% url 'dashboard:notices' %}"><i class="fas fa-bullhorn"></i> Notices</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'members' %}active{% endif %}">
+            <a href="{% url 'dashboard:members' %}"><i class="fas fa-user-friends"></i> Members</a>
+        </li>
+        <li class="mt-4">
+            <a href="/"><i class="fas fa-external-link-alt"></i> View Site</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <nav class="top-navbar">
+        <div class="page-title">
+            <div class="navbar-toggle-btn" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            {% block page_icon %}<i class="fas fa-tachometer-alt"></i>{% endblock %}
+            <h4 class="mb-0">{% block page_title %}Dashboard{% endblock %}</h4>
+        </div>
+        <div class="user-profile">
+            <div class="user-avatar text-uppercase">
+                {{ user.username|slice:":1" }}
+            </div>
+            <div class="user-info">
+                <span>{{ user.username }}</span>
+                <small class="d-block text-muted">Administrator</small>
+            </div>
+            <a href="{% url 'logout' %}" class="btn btn-sm btn-link text-danger ms-3"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </nav>
+
+    <div class="content-body">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
+<script>
+    document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('active');
+    });
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+        const sidebar = document.querySelector('.sidebar');
+        const toggleBtn = document.getElementById('sidebarToggle');
+        if (window.innerWidth <= 991.98 && sidebar.classList.contains('active')) {
+            if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                sidebar.classList.remove('active');
+            }
+        }
+    });
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

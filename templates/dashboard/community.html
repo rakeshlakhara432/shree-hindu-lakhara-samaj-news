@@ -1,0 +1,58 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Community Management{% endblock %}
+
+{% block page_icon %}<i class="fas fa-share-alt text-success"></i>{% endblock %}
+{% block page_title %}Samaj Community Links{% endblock %}
+
+{% block content %}
+<div class="card card-panel">
+    <div class="card-header-styled">
+        <h5 class="mb-0">Manage Community Channels</h5>
+        <a href="{% url 'dashboard:add_community' %}" class="btn btn-orange shadow-0"><i class="fas fa-plus me-2"></i> New Social Link</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Title</th>
+                        <th>Icon</th>
+                        <th>URL</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for link in links %}
+                    <tr>
+                        <td class="ps-4">
+                            <h6 class="mb-0 fw-bold">{{ link.title }}</h6>
+                        </td>
+                        <td><i class="{{ link.icon_class }} fa-lg"></i></td>
+                        <td><a href="{{ link.link }}" target="_blank" class="text-truncate d-inline-block" style="max-width: 200px;">{{ link.link }}</a></td>
+                        <td>
+                            {% if link.is_active %}
+                            <span class="badge bg-success">Active</span>
+                            {% else %}
+                            <span class="badge bg-warning">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end pe-4">
+                            <a href="{% url 'dashboard:edit_community' link.pk %}" class="btn btn-sm btn-light shadow-0"><i class="fas fa-edit text-primary"></i></a>
+                            <a href="{% url 'dashboard:delete_community' link.pk %}" class="btn btn-sm btn-light shadow-0" onclick="return confirm('Delete this link?')"><i class="fas fa-trash text-danger"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <p class="text-muted mb-0">No community links found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

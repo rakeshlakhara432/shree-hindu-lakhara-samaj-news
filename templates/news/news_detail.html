@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ news.title }} - श्री हिन्दू लखारा समाज{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-start">
+    <div class="row">
+        <div class="col-lg-8">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'news_category' news.category.slug %}">{{ news.category.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">News Detail</li>
+                </ol>
+            </nav>
+
+            <h1 class="fw-bold mb-3">{{ news.title }}</h1>
+            
+            <div class="d-flex align-items-center mb-4 text-muted small">
+                <span class="me-3"><i class="fas fa-user-edit me-1 text-orange"></i> Admin</span>
+                <span class="me-3"><i class="far fa-calendar-alt me-1 text-orange"></i> {{ news.created_at|date:"d M, Y" }}</span>
+                <span class="me-3"><i class="fas fa-eye me-1 text-orange"></i> {{ news.views_count }} views</span>
+                <span><i class="fas fa-folder me-1 text-orange"></i> {{ news.category.name }}</span>
+            </div>
+
+            {% if news.featured_image %}
+            <img src="{{ news.featured_image.url }}" class="img-fluid rounded shadow-sm mb-4 w-100" />
+            {% endif %}
+
+            <div class="news-content lead mb-5" style="white-space: pre-wrap; line-height: 1.8;">
+                {{ news.content }}
+            </div>
+
+            <div class="tags-section mb-5 py-4 border-top border-bottom">
+                <h6 class="fw-bold mb-3">Tags:</h6>
+                {% for tag in news.tags.split(',') %}
+                <span class="badge bg-light text-dark shadow-0 border p-2 me-2">#{{ tag|trim }}</span>
+                {% endfor %}
+            </div>
+
+            <!-- Share buttons -->
+            <div class="d-flex align-items-center mb-5">
+                <h6 class="fw-bold me-3 mb-0">Share this:</h6>
+                <a href="#" class="btn btn-primary btn-floating me-2 shadow-0" style="background-color: #3b5998;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="btn btn-primary btn-floating me-2 shadow-0" style="background-color: #55acee;"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="btn btn-primary btn-floating me-2 shadow-0" style="background-color: #25d366;"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-0 border mb-4">
+                <div class="card-header bg-orange text-white py-3">
+                    <h5 class="mb-0 fw-bold">Related News</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    {% for item in related_news %}
+                    <a href="{% url 'news_detail' item.slug %}" class="list-group-item list-group-item-action d-flex align-items-center py-3">
+                        <div class="flex-shrink-0" style="width: 70px; height: 50px;">
+                            {% if item.featured_image %}
+                            <img src="{{ item.featured_image.url }}" class="w-100 h-100 rounded" style="object-fit: cover;">
+                            {% else %}
+                            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=200&q=60" class="w-100 h-100 rounded" style="object-fit: cover;">
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="mb-0 small fw-bold text-truncate-2">{{ item.title }}</h6>
+                            <small class="text-muted">{{ item.created_at|date:"d M" }}</small>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Photo Management{% endblock %}
+
+{% block page_icon %}<i class="fas fa-camera text-primary"></i>{% endblock %}
+{% block page_title %}Gallery Photos{% endblock %}
+
+{% block content %}
+<div class="card card-panel">
+    <div class="card-header-styled">
+        <h5 class="mb-0">Manage Photos</h5>
+        <a href="{% url 'dashboard:add_photo' %}" class="btn btn-orange shadow-0"><i class="fas fa-plus me-2"></i> Add Photo</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Preview</th>
+                        <th>Album</th>
+                        <th>Caption</th>
+                        <th>Uploaded</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for photo in photos %}
+                    <tr>
+                        <td class="ps-4">
+                            <img src="{{ photo.image.url }}" class="rounded shadow-sm" style="width: 60px; height: 40px; object-fit: cover;">
+                        </td>
+                        <td>{{ photo.album.title }}</td>
+                        <td>{{ photo.caption|default:"-" }}</td>
+                        <td>{{ photo.uploaded_at|date:"d M, Y" }}</td>
+                        <td class="text-end pe-4">
+                            <a href="{% url 'dashboard:edit_photo' photo.pk %}" class="btn btn-sm btn-light shadow-0"><i class="fas fa-edit text-primary"></i></a>
+                            <a href="{% url 'dashboard:delete_photo' photo.pk %}" class="btn btn-sm btn-light shadow-0" onclick="return confirm('Delete this photo?')"><i class="fas fa-trash text-danger"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <p class="text-muted mb-0">No photos found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
