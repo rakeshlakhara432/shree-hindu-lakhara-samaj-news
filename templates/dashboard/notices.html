@@ -1,0 +1,51 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Notice Management{% endblock %}
+
+{% block page_icon %}<i class="fas fa-bullhorn text-danger"></i>{% endblock %}
+{% block page_title %}Public Notices{% endblock %}
+
+{% block content %}
+<div class="card card-panel">
+    <div class="card-header-styled">
+        <h5 class="mb-0">Notice Management</h5>
+        <a href="{% url 'dashboard:add_notice' %}" class="btn btn-orange shadow-0"><i class="fas fa-plus me-2"></i> New Notice</a>
+    </div>
+    <div class="card-body p-0">
+        {% for notice in notices %}
+        <div class="admin-list-item">
+            <div class="admin-list-item-content">
+                <span class="d-block text-dark fw-bold" style="font-size: 1.1rem;">{{ notice.title }}</span>
+                <small class="text-muted">{{ notice.created_at|date:"d M, Y" }}</small>
+            </div>
+            <div class="admin-actions">
+                <a href="{% url 'dashboard:edit_notice' notice.pk %}" class="btn btn-sm btn-light shadow-0 me-1"><i class="fas fa-edit text-primary"></i></a>
+                <a href="{% url 'dashboard:delete_notice' notice.pk %}" class="btn btn-sm btn-light shadow-0" onclick="return confirm('Delete this notice?')"><i class="fas fa-trash text-danger"></i></a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="p-5 text-center">
+            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No notices found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .admin-list-item {
+        background-color: #fff9f5;
+        margin: 15px;
+        border-radius: 8px;
+        border: 1px solid #fee6d8;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .admin-list-item-content {
+        border-left: 4px solid var(--primary-orange);
+        padding-left: 15px;
+    }
+</style>
+{% endblock %}

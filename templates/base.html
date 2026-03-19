@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="hi">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}श्री हिन्दू लखारा समाज - डिजिटल न्यूज़ पोर्टल{% endblock %}</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-orange: #FF6600;
+            --dark-brown: #1a0f00;
+            --light-bg: #fdfdfd;
+        }
+        body { 
+            background-color: #f4f4f4; 
+            font-family: 'Noto Sans Devanagari', 'Roboto', sans-serif;
+            color: #333;
+        }
+        .top-header {
+            background-color: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .logo-section img {
+            height: 60px;
+            margin-right: 15px;
+        }
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--primary-orange);
+        }
+        .logo-text p {
+            font-size: 12px;
+            margin: 0;
+            color: #666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .main-navbar {
+            background-color: var(--dark-brown);
+            padding: 0;
+        }
+        .main-navbar .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            padding: 12px 15px !important;
+            border-bottom: 3px solid transparent;
+        }
+        .main-navbar .nav-link:hover, .main-navbar .nav-link.active {
+            background-color: rgba(255,102,0,0.1);
+            border-bottom-color: var(--primary-orange);
+        }
+        .main-navbar .nav-link i {
+            margin-right: 5px;
+        }
+        .search-box {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            overflow: hidden;
+            display: flex;
+        }
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 8px 15px;
+            width: 300px;
+        }
+        .search-box button {
+            background: var(--primary-orange);
+            color: #fff;
+            border: none;
+            padding: 0 15px;
+        }
+        .btn-subscribe {
+            background-color: var(--primary-orange);
+            color: #fff;
+            border-radius: 20px;
+            font-weight: 600;
+            padding: 8px 25px;
+        }
+        .btn-login {
+            color: var(--primary-orange);
+            border: 1px solid var(--primary-orange);
+            border-radius: 20px;
+            padding: 7px 20px;
+            margin-right: 10px;
+        }
+        .footer {
+            background-color: var(--dark-brown);
+            color: #fff;
+            padding: 60px 0 20px;
+        }
+        .footer h5 {
+            color: var(--primary-orange);
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--primary-orange);
+            padding-left: 5px;
+        }
+        .social-icons a {
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #fff;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+        .social-icons a:hover {
+            background: var(--primary-orange);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 991.98px) {
+            .logo-section img { height: 45px; }
+            .logo-text h1 { font-size: 18px; }
+            .logo-text p { font-size: 10px; }
+            .search-box { margin: 15px 0; width: 100%; }
+            .search-box input { width: 100%; }
+            .main-navbar .nav-link { border-bottom: none; border-left: 3px solid transparent; }
+            .main-navbar .nav-link:hover, .main-navbar .nav-link.active { border-left-color: var(--primary-orange); }
+        }
+
+        @media (max-width: 575.98px) {
+            .top-header { text-align: center; }
+            .logo-section { justify-content: center; margin-bottom: 10px; }
+            .text-end { text-align: center !important; }
+            .btn-login { margin-right: 0; width: 100%; margin-top: 10px; }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- Top Header -->
+<header class="top-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-5 d-flex align-items-center logo-section mb-3 mb-lg-0">
+                <img src="{% static 'img/logo.png' %}" alt="Logo">
+                <div class="logo-text text-start">
+                    <h1>श्री हिन्दू लखारा समाज</h1>
+                    <p>Shree Hindu Lakhara Samaj — Digital News Portal</p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+                <form class="search-box">
+                    <input type="text" placeholder="समाचार खोजें... Search news...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div class="col-12 col-lg-3 text-center text-lg-end">
+                {% if user.is_authenticated %}
+                    <div class="d-flex align-items-center justify-content-center justify-content-lg-end">
+                        <span class="me-3 fw-bold text-muted small"><i class="fas fa-user-circle me-1 text-orange"></i> {{ user.username }}</span>
+                        {% if user.is_staff %}
+                        <a href="{% url 'dashboard:home' %}" class="btn btn-dark btn-sm shadow-0 me-2">Portal</a>
+                        {% endif %}
+                        <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-login btn-sm px-4"><i class="fas fa-sign-in-alt me-1"></i> Login / Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark main-navbar sticky-top shadow-0">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#mainNav">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'home' %}"><span class="badge bg-primary me-1"><i class="fas fa-home"></i></span> Home</a>
+                </li>
+                {% for cat in all_categories %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'news_category' cat.slug %}">{{ cat.name }}</a>
+                </li>
+                {% endfor %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'gallery_list' %}"><span class="badge bg-primary me-1"><i class="fas fa-image"></i></span> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'event_list' %}"><span class="badge bg-primary me-1"><i class="fas fa-calendar-alt"></i></span> Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'notice_list' %}"><span class="badge bg-danger me-1"><i class="fas fa-bullhorn"></i></span> Notices</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="d-flex align-items-center mb-3 text-start">
+                    <span class="badge bg-white text-dark p-2 me-2 rounded-circle"><i class="fas fa-om fa-lg"></i></span>
+                    <h5 class="mb-0 text-white">श्री हिन्दू लखारा समाज</h5>
+                </div>
+                <p class="small text-muted mb-4 text-start">Shree Hindu Lakhara Samaj Digital News Portal — समाज की आवाज़, समाज के लिए। एकता, सेवा और धर्म के पथ पर अग्रसर।</p>
+                <div class="social-icons text-start">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-2 footer-links text-start">
+                <h5>Categories</h5>
+                {% for cat in all_categories|slice:":6" %}
+                <a href="{% url 'news_category' cat.slug %}">{{ cat.name }}</a>
+                {% endfor %}
+            </div>
+            <div class="col-sm-6 col-lg-2 footer-links text-start">
+                <h5>Quick Links</h5>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'gallery_list' %}">Gallery</a>
+                <a href="{% url 'event_list' %}">Events</a>
+                <a href="{% url 'notice_list' %}">Notices</a>
+            </div>
+        </div>
+        <hr class="mt-5 mb-4 border-secondary">
+        <div class="text-center small text-muted">
+            &copy; 2026 SHLS Digital. All Rights Reserved.
+        </div>
+    </div>
+</footer>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.umd.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggler = document.querySelector('.navbar-toggler');
+        const collapse = document.getElementById('mainNav');
+        if (toggler && collapse) {
+            toggler.addEventListener('click', function() {
+                if (collapse.classList.contains('show')) {
+                    collapse.classList.remove('show');
+                } else {
+                    collapse.classList.add('show');
+                }
+            });
+        }
+    });
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

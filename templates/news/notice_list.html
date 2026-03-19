@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Notices - श्री हिन्दू लखारा समाज{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-start">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="fw-bold mb-0"><span class="border-start border-4 border-danger ps-3">Society Notices — समाज सूचनाएं</span></h2>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-5">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="px-4 py-3">Date</th>
+                            <th class="py-3">Notice Title</th>
+                            <th class="py-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for notice in notices %}
+                        <tr>
+                            <td class="px-4 py-4">
+                                <span class="badge bg-light text-dark shadow-0 border">{{ notice.created_at|date:"d M, Y" }}</span>
+                            </td>
+                            <td class="py-4">
+                                <h6 class="fw-bold mb-1">{{ notice.title }}</h6>
+                                <p class="small text-muted mb-0">{{ notice.content|truncatechars:100 }}</p>
+                            </td>
+                            <td class="py-4">
+                                {% if notice.file %}
+                                <a href="{{ notice.file.url }}" class="btn btn-outline-danger btn-sm btn-rounded shadow-0" target="_blank">
+                                    <i class="fas fa-download me-1"></i> Download PDF
+                                </a>
+                                {% else %}
+                                <button class="btn btn-outline-secondary btn-sm btn-rounded shadow-0" disabled>
+                                    View Detail
+                                </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center py-5">
+                                <p class="text-muted">No notices published yet.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
